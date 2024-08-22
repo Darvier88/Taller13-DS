@@ -4,10 +4,6 @@
  */
 package calculatorsmp;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -16,42 +12,34 @@ import static org.junit.Assert.*;
  * @author micha
  */
 public class OperationsTest {
-    
-    public OperationsTest() {
-    }
-   
 
     @Test
     public void testMakeFormulaNotNull() {
         String formula = Operations.MakeFormula();
-        assertNotNull(formula, "La fórmula generada no debe ser nula");
-        
+        assertNotNull("La fórmula generada no debe ser nula", formula);
     }
-    
+
     @Test
     public void testSolveSimpleAddition() {
         String result = Operations.Solve("2+3");
-        assertEquals("2+3=5", result, "La solución para 2+3 debe ser 5");
+        assertEquals("La solución para 2+3 debe ser 5", "2+3=5", result);
     }
 
     @Test
     public void testSolveSimpleSubtraction() {
         String result = Operations.Solve("7-4");
-        assertEquals("7-4=3", result, "La solución para 7-4 debe ser 3");
+        assertEquals("La solución para 7-4 debe ser 3", "7-4=3", result);
     }
-    
-    
+
     @Test
     public void testSolveSimpleMultiplication() {
         String result = Operations.Solve("3*4");
-        assertEquals("3*4=12", result, "La solución para 3*4 debe ser 12");
+        assertEquals("La solución para 3*4 debe ser 12", "3*4=12", result);
     }
 
     @Test
     public void testSolveSimpleDivision() {
         String result = Operations.Solve("8/2");
-        assertEquals("8/2=4", result, "La solución para 8/2 debe ser 4");
+        assertEquals("La solución para 8/2 debe ser 4", "8/2=4", result);
     }
-   
-    
 }

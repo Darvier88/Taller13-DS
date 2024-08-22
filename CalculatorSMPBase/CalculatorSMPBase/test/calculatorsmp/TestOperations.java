@@ -32,73 +32,75 @@ public class TestOperations {
 
     @Test
     public void testSolveSimpleAddition() {
-        String formula = "2+3";
-        String resultado = Operations.Solve(formula);
-        assertEquals("2+3=5", resultado, "El resultado de 2+3 debería ser 5");
+        String result = Operations.Solve("2+3");
+        assertEquals("La solución para 2+3 debe ser 5", "2+3=5", result);
     }
 
     @Test
     public void testSolveSimpleSubtraction() {
-        String formula = "5-3";
-        String resultado = Operations.Solve(formula);
-        assertEquals("5-3=2", resultado, "El resultado de 5-3 debería ser 2");
+        String result = Operations.Solve("7-4");
+        assertEquals("La solución para 7-4 debe ser 3", "7-4=3", result);
     }
 
     @Test
     public void testSolveSimpleMultiplication() {
-        String formula = "4*3";
-        String resultado = Operations.Solve(formula);
-        assertEquals("4*3=12", resultado, "El resultado de 4*3 debería ser 12");
+        String result = Operations.Solve("3*4");
+        assertEquals("La solución para 3*4 debe ser 12", "3*4=12", result);
     }
 
     @Test
     public void testSolveSimpleDivision() {
-        String formula = "10/2";
-        String resultado = Operations.Solve(formula);
-        assertEquals("10/2=5", resultado, "El resultado de 10/2 debería ser 5");
+        String result = Operations.Solve("8/2");
+        assertEquals("La solución para 8/2 debe ser 4", "8/2=4", result);
     }
 
     @Test
     public void testSolveComplexExpression() {
         String formula = "2+3*4";
         String resultado = Operations.Solve(formula);
-        assertEquals("2+3*4=14", resultado, "El resultado de 2+3*4 debería ser 14");
+        assertEquals("El resultado de 2+3*4 debería ser 14", "2+3*4=14", resultado);
     }
 
-    @Test
+     @Test
     public void testSolveDivisionByZero() {
         String formula = "10/0";
-        Exception exception = assertThrows(ArithmeticException.class, () -> {
+        try {
             Operations.Solve(formula);
-        });
-        assertTrue(exception.getMessage().contains("/ by zero"), "Dividir por cero debería lanzar una ArithmeticException");
+        } catch (ArithmeticException e) {
+            assertTrue("Dividir por cero debería lanzar una ArithmeticException", 
+                       e.getMessage().contains("by zero"));
+            return;
+        }
+        // Si no se lanza la excepción, falla la prueba
+        fail("Se esperaba una ArithmeticException pero no se lanzó ninguna");
     }
     @Test
     public void testSolveAdditionWithZero() {
         String formula = "0+5";
         String resultado = Operations.Solve(formula);
-        assertEquals("0+5=5", resultado, "El resultado de 0+5 debería ser 5");
+        assertEquals("El resultado de 0+5 debería ser 5", "0+5=5", resultado);
     }
 
     @Test
     public void testSolveSubtractionWithZero() {
         String formula = "0-3";
         String resultado = Operations.Solve(formula);
-        assertEquals("0-3=-3", resultado, "El resultado de 0-3 debería ser -3");
+        assertEquals("El resultado de 0-3 debería ser -3", "0-3=-3", resultado);
     }
 
     @Test
     public void testSolveMultiplicationWithZero() {
         String formula = "0*7";
         String resultado = Operations.Solve(formula);
-        assertEquals("0*7=0", resultado, "El resultado de 0*7 debería ser 0");
+        assertEquals("El resultado de 0*7 debería ser 0", "0*7=0", resultado);
     }
+
     // Prueba para adición que da un resultado negativo
     @Test
     public void testAdditionNegativeResult() {
         String formula = "-3+1";
         String resultado = Operations.Solve(formula);
-        assertEquals("-3+1=-2", resultado, "El resultado de -3+1 debería ser -2");
+        assertEquals("El resultado de -3+1 debería ser -2", "-3+1=-2", resultado);
     }
 
     // Prueba para sustracción que da un resultado negativo
@@ -106,7 +108,7 @@ public class TestOperations {
     public void testSubtractionNegativeResult() {
         String formula = "3-5";
         String resultado = Operations.Solve(formula);
-        assertEquals("3-5=-2", resultado, "El resultado de 3-5 debería ser -2");
+        assertEquals("El resultado de 3-5 debería ser -2", "3-5=-2", resultado);
     }
 
     // Prueba para multiplicación que da un resultado negativo
@@ -114,7 +116,7 @@ public class TestOperations {
     public void testMultiplicationNegativeResult() {
         String formula = "-2*3";
         String resultado = Operations.Solve(formula);
-        assertEquals("-2*3=-6", resultado, "El resultado de -2*3 debería ser -6");
+        assertEquals("El resultado de -2*3 debería ser -6", "-2*3=-6", resultado);
     }
 
     // Prueba para división que da un resultado negativo
@@ -122,7 +124,7 @@ public class TestOperations {
     public void testDivisionNegativeResult() {
         String formula = "-6/2";
         String resultado = Operations.Solve(formula);
-        assertEquals("-6/2=-3", resultado, "El resultado de -6/2 debería ser -3");
+        assertEquals("El resultado de -6/2 debería ser -3", "-6/2=-3", resultado);
     }
 
     // Prueba adicional para división que da un resultado negativo (dividiendo por un número negativo)
@@ -130,70 +132,86 @@ public class TestOperations {
     public void testDivisionNegativeDivisorResult() {
         String formula = "6/-2";
         String resultado = Operations.Solve(formula);
-        assertEquals("6/-2=-3", resultado, "El resultado de 6/-2 debería ser -3");
+        assertEquals("El resultado de 6/-2 debería ser -3", "6/-2=-3", resultado);
     }
-     @Test
+
+    @Test
     public void testComplexNegativeResult() {
         String formula = "2+3*-5/5-10";
         String resultado = Operations.Solve(formula);
-        assertEquals("2+3*-5/5-10=-13", resultado, "El resultado de 2+3*-5/5-10 debería ser -13");
+        assertEquals("El resultado de 2+3*-5/5-10 debería ser -11", "2+3*-5/5-10=-11", resultado);
     }
+
     @Test
     public void testComplexOperationWithDivisionByZero() {
         String formula = "5+3*10/0-2";
-        
-        Exception exception = assertThrows(ArithmeticException.class, () -> {
+
+        try {
             Operations.Solve(formula);
-        });
-
-        String expectedMessage = "/ by zero";
-        String actualMessage = exception.getMessage();
-
-        assertTrue(actualMessage.contains(expectedMessage), "Debería lanzar una ArithmeticException debido a la división por 0");
+            fail("Se esperaba una ArithmeticException debido a la división por 0, pero no se lanzó ninguna excepción.");
+        } catch (ArithmeticException e) {
+            String expectedMessage = "by zero";
+            String actualMessage = e.getMessage();
+            assertTrue("Debería lanzar una ArithmeticException debido a la división por 0",
+                       actualMessage.contains(expectedMessage));
+        }
     }
+
     @Test
     public void testSolveSubtractionWithNegativeNumbers() {
         String formula = "-2-2";
         String resultado = Operations.Solve(formula);
-        assertEquals("-2-2=-4", resultado, "El resultado de -2-2 debería ser -4");
+        assertEquals("El resultado de -2-2 debería ser -4", "-2-2=-4", resultado);
     }
 
     @Test
     public void testSolveMultiplicationWithNegativeNumbers() {
         String formula = "-2*-3";
         String resultado = Operations.Solve(formula);
-        assertEquals("-2*-3=6", resultado, "El resultado de -2*-3 debería ser 6");
+        assertEquals("El resultado de -2*-3 debería ser 6", "-2*-3=6", resultado);
     }
 
     @Test
     public void testSolveDivisionWithNegativeNumbers() {
         String formula = "-6/-3";
         String resultado = Operations.Solve(formula);
-        assertEquals("-6/-3=2", resultado, "El resultado de -6/-3 debería ser 2");
+        assertEquals("El resultado de -6/-3 debería ser 2", "-6/-3=2", resultado);
     }
+
     @Test
     public void testAdditionOverflow() {
         String formula = "2147483647+1";  // Esto excede el rango de int
-        Exception exception = assertThrows(ArithmeticException.class, () -> {
+        try {
             Operations.Solve(formula);
-        });
-        assertTrue(exception.getMessage().contains("integer overflow"), "Debería lanzar una ArithmeticException debido al desbordamiento de enteros");
+            fail("Se esperaba una ArithmeticException debido al desbordamiento de enteros, pero no se lanzó ninguna excepción.");
+        } catch (ArithmeticException e) {
+            assertTrue("Debería lanzar una ArithmeticException debido al desbordamiento de enteros",
+                       e.getMessage().contains("integer overflow"));
+        }
     }
+
     @Test
     public void testMultiplicationOverflow() {
         String formula = "46341*46341";  // Esto excede el rango de int
-        Exception exception = assertThrows(ArithmeticException.class, () -> {
+        try {
             Operations.Solve(formula);
-        });
-        assertTrue(exception.getMessage().contains("integer overflow"), "Debería lanzar una ArithmeticException debido al desbordamiento de enteros");
+            fail("Se esperaba una ArithmeticException debido al desbordamiento de enteros, pero no se lanzó ninguna excepción.");
+        } catch (ArithmeticException e) {
+            assertTrue("Debería lanzar una ArithmeticException debido al desbordamiento de enteros",
+                       e.getMessage().contains("integer overflow"));
+        }
     }
+
     @Test
     public void testInvalidInput() {
         String formula = "2++3";
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+        try {
             Operations.Solve(formula);
-        });
-        assertTrue(exception.getMessage().contains("Invalid input"), "Debería lanzar una IllegalArgumentException debido a la entrada no válida");
+            fail("Se esperaba una IllegalArgumentException debido a la entrada no válida, pero no se lanzó ninguna excepción.");
+        } catch (IllegalArgumentException e) {
+            assertTrue("Debería lanzar una IllegalArgumentException debido a la entrada no válida",
+                       e.getMessage().contains("Invalid input"));
+        }
     }
 
 }
