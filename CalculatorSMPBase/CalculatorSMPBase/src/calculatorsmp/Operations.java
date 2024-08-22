@@ -117,6 +117,10 @@ public class Operations {
                 System.out.println("Intentando dividir " + a + " por cero");
                 throw new ArithmeticException("Cannot divide by zero");
             }
+            // Verificación de desbordamiento en división
+            if (a == Integer.MIN_VALUE && b == -1) {
+                throw new ArithmeticException("integer overflow");
+            }
             return a / b;
     }
         return 0;
