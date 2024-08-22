@@ -1,15 +1,16 @@
+package calculatorsmp;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit5TestClass.java to edit this template
  */
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-import calculatorsmp.Operations;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
 /**
  *
@@ -17,11 +18,11 @@ import calculatorsmp.Operations;
  */
 public class TestOperations {
     
-     @Test
+    @Test
     public void testMakeFormula() {
         String formula = Operations.MakeFormula();
-        assertNotNull(formula, "La fórmula no debería ser nula");
-        assertTrue(formula.matches("\\d+[\\+\\-\\*/]\\d+([\\+\\-\\*/]\\d+)?"), "La fórmula debería coincidir con el patrón esperado");
+        assertTrue("La fórmula debería coincidir con el patrón esperado", 
+                   formula.matches("\\d+[\\+\\-\\*/]\\d+([\\+\\-\\*/]\\d+)?"));
     }
     @Test
     public void testMakeFormulaNotNull() {

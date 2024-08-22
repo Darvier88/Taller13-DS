@@ -23,4 +23,7 @@
 hs_err_pid*
 replay_pid*
 /CalculatorSMPBase/CalculatorSMPBase/build/
+<<<<<<< HEAD
 /CalculatorSMPBase/CalculatorSMPBase/dist/
+=======
+>>>>>>> e83f49f0fc61f4abe0b16600d06bfc252cb60651
